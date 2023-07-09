@@ -3,7 +3,8 @@ import user_interface
 import file_manager
 import timeline_view
 import search_function
-import ocr_ai_analysis
+import ocr_module
+import ai_analysis
 import speech_to_text
 import text_to_speech
 import reminder_system
@@ -11,7 +12,8 @@ import image_processing
 import video_processing
 import audio_transcription
 import storage_options
-import integration
+import local_storage
+import cloud_storage
 
 # Initialize user files, tasks, and preferences
 userFiles = []
@@ -19,50 +21,49 @@ userTasks = []
 userPreferences = {}
 
 def main():
-    # Initialize the user interface
-    user_interface.initialize()
+    # Load user preferences
+    userPreferences = user_interface.loadUserPreferences()
 
-    # Load user files, tasks, and preferences
-    global userFiles, userTasks, userPreferences
-    userFiles, userTasks, userPreferences = file_manager.loadUserData()
+    # Load user files and tasks
+    userFiles = file_manager.loadUserFiles()
+    userTasks = reminder_system.loadUserTasks()
 
-    # Initialize other modules
-    timeline_view.initialize(userFiles)
-    search_function.initialize(userFiles)
-    ocr_ai_analysis.initialize()
-    speech_to_text.initialize()
-    text_to_speech.initialize()
-    reminder_system.initialize(userTasks)
-    image_processing.initialize()
-    video_processing.initialize()
-    audio_transcription.initialize()
-    storage_options.initialize(userPreferences)
+    # Initialize UI
+    user_interface.initializeUI()
 
-    # Start the main loop
-    while True:
-        # Update the user interface
-        user_interface.update()
+    # Initialize file manager
+    file_manager.initializeFileManager()
 
-        # Handle user input
-        user_interface.handleInput()
+    # Initialize timeline view
+    timeline_view.initializeTimelineView()
 
-        # Update other modules
-        timeline_view.update()
-        search_function.update()
-        ocr_ai_analysis.update()
-        speech_to_text.update()
-        text_to_speech.update()
-        reminder_system.update()
-        image_processing.update()
-        video_processing.update()
-        audio_transcription.update()
-        storage_options.update()
+    # Initialize search function
+    search_function.initializeSearchFunction()
 
-        # Save user data
-        file_manager.saveUserData(userFiles, userTasks, userPreferences)
+    # Initialize OCR module
+    ocr_module.initializeOCRModule()
 
-        # Integrate all modules
-        integration.integrate()
+    # Initialize AI analysis
+    ai_analysis.initializeAIAnalysis()
+
+    # Initialize speech-to-text and text-to-speech functionalities
+    speech_to_text.initializeSpeechToText()
+    text_to_speech.initializeTextToSpeech()
+
+    # Initialize reminder system
+    reminder_system.initializeReminderSystem()
+
+    # Initialize image and video processing capabilities
+    image_processing.initializeImageProcessing()
+    video_processing.initializeVideoProcessing()
+
+    # Initialize audio file transcription
+    audio_transcription.initializeAudioTranscription()
+
+    # Initialize storage options
+    storage_options.initializeStorageOptions()
+    local_storage.initializeLocalStorage()
+    cloud_storage.initializeCloudStorage()
 
 if __name__ == "__main__":
     main()

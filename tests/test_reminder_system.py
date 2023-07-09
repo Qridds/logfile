@@ -1,33 +1,37 @@
+```python
 import unittest
-from src.reminder_system import setReminder, updateTask
+from src.reminder_system import setReminder, userTasks
 
 class TestReminderSystem(unittest.TestCase):
 
     def setUp(self):
-        self.userTasks = []
-        self.task1 = {"name": "Task 1", "date": "2022-01-01", "reminder": "2022-01-01 10:00:00"}
-        self.task2 = {"name": "Task 2", "date": "2022-02-01", "reminder": "2022-02-01 10:00:00"}
+        self.task1 = {
+            'id': 1,
+            'name': 'Test Task 1',
+            'date': '2022-01-01',
+            'reminders': [],
+            'associated_files': []
+        }
+        self.task2 = {
+            'id': 2,
+            'name': 'Test Task 2',
+            'date': '2022-02-01',
+            'reminders': [],
+            'associated_files': []
+        }
+        userTasks.append(self.task1)
+        userTasks.append(self.task2)
+
+    def tearDown(self):
+        userTasks.clear()
 
     def test_setReminder(self):
-        setReminder(self.task1, self.userTasks)
-        self.assertEqual(len(self.userTasks), 1)
-        self.assertEqual(self.userTasks[0]['name'], "Task 1")
+        setReminder(1, '2022-01-01 10:00:00')
+        self.assertEqual(userTasks[0]['reminders'][0], '2022-01-01 10:00:00')
 
-    def test_updateTask(self):
-        setReminder(self.task1, self.userTasks)
-        self.task1["reminder"] = "2022-01-01 11:00:00"
-        updateTask(self.task1, self.userTasks)
-        self.assertEqual(self.userTasks[0]['reminder'], "2022-01-01 11:00:00")
-
-    def test_multipleReminders(self):
-        setReminder(self.task1, self.userTasks)
-        setReminder(self.task2, self.userTasks)
-        self.assertEqual(len(self.userTasks), 2)
-
-    def test_noReminder(self):
-        self.task1["reminder"] = None
-        setReminder(self.task1, self.userTasks)
-        self.assertEqual(self.userTasks[0]['reminder'], None)
+        setReminder(2, '2022-02-01 15:00:00')
+        self.assertEqual(userTasks[1]['reminders'][0], '2022-02-01 15:00:00')
 
 if __name__ == '__main__':
     unittest.main()
+```

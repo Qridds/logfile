@@ -1,22 +1,17 @@
 ```python
 import speech_recognition as sr
 
-def transcribeAudio(audio_file):
-    # Initialize recognizer class (for recognizing the speech)
-    r = sr.Recognizer()
+def transcribe_audio(file_path):
+    recognizer = sr.Recognizer()
+    audio_file = sr.AudioFile(file_path)
 
-    # Reading Audio file as source
-    # listening the audio file and store in audio_text variable
-    with sr.AudioFile(audio_file) as source:
-        audio_text = r.listen(source)
-
-    # recoginize_() method will throw a request error if the API is unreachable, hence using exception handling
+    with audio_file as source:
+        audio = recognizer.record(source)
     try:
-        # using google speech recognition
-        print('Converting audio transcripts into text...')
-        text = r.recognize_google(audio_text)
+        text = recognizer.recognize_google(audio)
         return text
-
-    except:
-         print('Sorry.. run again...')
+    except sr.UnknownValueError:
+        return "Google Speech Recognition could not understand audio"
+    except sr.RequestError as e:
+        return "Could not request results from Google Speech Recognition service; {0}".format(e)
 ```

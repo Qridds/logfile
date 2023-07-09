@@ -7,19 +7,13 @@ def processImage(file_path, action, value):
     if action == 'crop':
         left, upper, right, lower = value
         cropped_image = image.crop((left, upper, right, lower))
-        return cropped_image
-
+        cropped_image.save(file_path)
     elif action == 'resize':
         width, height = value
         resized_image = image.resize((width, height))
-        return resized_image
-
-    elif action == 'rotate':
-        angle = value
-        rotated_image = image.rotate(angle)
-        return rotated_image
-
+        resized_image.save(file_path)
     else:
-        print("Invalid action. Please choose from 'crop', 'resize', or 'rotate'.")
-        return None
+        print("Invalid action")
+
+    return file_path
 ```

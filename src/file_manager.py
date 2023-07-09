@@ -2,68 +2,40 @@
 import os
 from datetime import datetime
 
-# Shared variables
 userFiles = []
-userTasks = []
-userPreferences = {}
 
-# File schema
 class FileSchema:
-    def __init__(self, name, type, date, tags):
-        self.name = name
-        self.type = type
+    def __init__(self, filename, filetype, date, tags):
+        self.filename = filename
+        self.filetype = filetype
         self.date = date
         self.tags = tags
 
-# Function to upload a new file
-def uploadFile(filePath):
-    try:
-        # Extract metadata
-        name = os.path.basename(filePath)
-        type = os.path.splitext(name)[1]
-        date = datetime.fromtimestamp(os.path.getmtime(filePath))
-        tags = []
+def uploadFile(filepath, tags):
+    filename, filetype = os.path.splitext(filepath)
+    date = datetime.now()
+    newFile = FileSchema(filename, filetype, date, tags)
+    userFiles.append(newFile)
+    return newFile
 
-        # Create a new file object
-        file = FileSchema(name, type, date, tags)
+def updateFile(file, newTags=None, newDate=None):
+    if newTags:
+        file.tags = newTags
+    if newDate:
+        file.date = newDate
+    return file
 
-        # Add the file to the list of user files
-        userFiles.append(file)
+def searchFiles(query):
+    results = []
+    for file in userFiles:
+        if query in file.filename or query in file.tags:
+            results.append(file)
+    return results
 
-        # Send a message that a new file has been uploaded
-        print("fileUploaded")
+def storeLocal(file, path):
+    os.rename(file.filename + file.filetype, path + file.filename + file.filetype)
 
-    except Exception as e:
-        print(f"An error occurred while uploading the file: {e}")
-
-# Function to update an existing file
-def updateFile(file, newFilePath):
-    try:
-        # Update the file's metadata
-        file.name = os.path.basename(newFilePath)
-        file.type = os.path.splitext(file.name)[1]
-        file.date = datetime.fromtimestamp(os.path.getmtime(newFilePath))
-
-        # Send a message that the file has been updated
-        print("fileUpdated")
-
-    except Exception as e:
-        print(f"An error occurred while updating the file: {e}")
-
-# Function to store a file
-def storeFile(file, location):
-    try:
-        # Check if the location is local or cloud
-        if location == "local":
-            # Store the file locally
-            pass
-        elif location == "cloud":
-            # Store the file in the cloud
-            pass
-
-        # Send a message that the file has been stored
-        print("fileStored")
-
-    except Exception as e:
-        print(f"An error occurred while storing the file: {e}")
+def storeCloud(file, cloudService):
+    # This function will depend on the specific cloud service API
+    pass
 ```

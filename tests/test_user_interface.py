@@ -54,6 +54,12 @@ class TestUserInterface(unittest.TestCase):
         search_result = self.ui.searchFiles("test")
         self.assertIn(test_file, search_result)
 
+    def test_setReminder(self):
+        test_task = "Test Task"
+        self.ui.createTask(test_task)
+        self.ui.setReminder(test_task, "2022-12-31")
+        self.assertEqual(self.ui.userTasks[test_task]["reminder"], "2022-12-31")
+
 if __name__ == '__main__':
     unittest.main()
 ```

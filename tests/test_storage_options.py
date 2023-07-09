@@ -1,6 +1,6 @@
 ```python
 import unittest
-from src.storage_options import storeFile
+from src.storage_options import storeLocal, storeCloud
 
 class TestStorageOptions(unittest.TestCase):
 
@@ -8,22 +8,16 @@ class TestStorageOptions(unittest.TestCase):
         self.file = {
             'name': 'test_file',
             'type': 'txt',
-            'date': '2021-12-01',
-            'tags': ['test', 'sample'],
             'content': 'This is a test file.'
         }
 
-    def test_local_storage(self):
-        result = storeFile(self.file, 'local')
+    def test_storeLocal(self):
+        result = storeLocal(self.file)
         self.assertTrue(result)
 
-    def test_cloud_storage(self):
-        result = storeFile(self.file, 'cloud')
+    def test_storeCloud(self):
+        result = storeCloud(self.file)
         self.assertTrue(result)
-
-    def test_invalid_storage_option(self):
-        with self.assertRaises(ValueError):
-            storeFile(self.file, 'invalid_option')
 
 if __name__ == '__main__':
     unittest.main()

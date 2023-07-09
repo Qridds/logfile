@@ -1,31 +1,22 @@
+```python
 import unittest
 from src.image_processing import processImage
 
 class TestImageProcessing(unittest.TestCase):
 
     def setUp(self):
-        self.test_image = {
-            'name': 'test_image.jpg',
-            'type': 'image',
-            'date': '2021-12-01',
-            'tags': ['test', 'image'],
-            'path': '/path/to/test_image.jpg'
-        }
+        self.test_image = "test_image.jpg"
+        self.processed_image = "processed_image.jpg"
 
-    def test_process_image(self):
-        result = processImage(self.test_image)
-        self.assertIsNotNone(result)
-        self.assertEqual(result['name'], 'test_image.jpg')
-        self.assertEqual(result['type'], 'image')
-        self.assertIn('processed', result['tags'])
+    def test_processImage(self):
+        processImage(self.test_image, self.processed_image)
+        self.assertTrue(os.path.exists(self.processed_image))
 
-    def test_process_image_no_image(self):
-        with self.assertRaises(TypeError):
-            processImage(None)
-
-    def test_process_image_invalid_type(self):
-        with self.assertRaises(ValueError):
-            processImage({'name': 'test.txt', 'type': 'text'})
+        # Check if the processed image is not the same as the original
+        with open(self.test_image, 'rb') as file1:
+            with open(self.processed_image, 'rb') as file2:
+                self.assertNotEqual(file1.read(), file2.read())
 
 if __name__ == '__main__':
     unittest.main()
+```

@@ -1,22 +1,17 @@
 ```python
 import pyttsx3
 
-def textToSpeech(text):
+def text_to_speech(text):
     engine = pyttsx3.init()
     engine.say(text)
     engine.runAndWait()
 
-def updateTask(task):
+def updateTask(task_id, new_text):
     global userTasks
-    for i, t in enumerate(userTasks):
-        if t['id'] == task['id']:
-            userTasks[i] = task
-            textToSpeech(f"Task {task['name']} has been updated.")
-            return
-    raise Exception("Task not found.")
-
-def createTask(task):
-    global userTasks
-    userTasks.append(task)
-    textToSpeech(f"Task {task['name']} has been created.")
+    for task in userTasks:
+        if task['id'] == task_id:
+            task['text'] = new_text
+            text_to_speech(new_text)
+            return True
+    return False
 ```

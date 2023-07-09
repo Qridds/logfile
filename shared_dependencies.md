@@ -6,8 +6,8 @@ Shared Dependencies:
    - `userPreferences`: User settings and preferences for the app.
 
 2. Data Schemas:
-   - `FileSchema`: Schema for file objects, including metadata like name, type, date, tags, etc.
-   - `TaskSchema`: Schema for task objects, including metadata like name, date, reminder settings, etc.
+   - `FileSchema`: Schema for file objects, including type, date, tags, etc.
+   - `TaskSchema`: Schema for task objects, including date, reminders, associated files, etc.
 
 3. DOM Element IDs:
    - `fileListView`: The main area where files are displayed.
@@ -28,11 +28,6 @@ Shared Dependencies:
    - `updateFile()`: Function for updating existing files.
    - `updateTask()`: Function for updating existing tasks.
    - `searchFiles()`: Function for searching files.
-   - `ocrScan()`: Function for scanning physical documents.
-   - `speechToText()`: Function for converting speech to text.
-   - `textToSpeech()`: Function for converting text to speech.
-   - `setReminder()`: Function for setting reminders.
-   - `processImage()`: Function for processing images.
-   - `processVideo()`: Function for processing videos.
-   - `transcribeAudio()`: Function for transcribing audio files.
-   - `storeFile()`: Function for storing files locally or in the cloud.
+   - `setReminder()`: Function for setting reminders on tasks.
+   - `processImage()`, `processVideo()`, `transcribeAudio()`: Functions for processing media files.
+   - `storeLocal()`, `storeCloud()`: Functions for storing files either locally or on the cloud.
